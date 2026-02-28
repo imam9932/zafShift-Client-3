@@ -10,7 +10,7 @@ const Navbar = () => {
     <NavLink  >Home</NavLink>
     <NavLink  >Home</NavLink>
     <NavLink  >Home</NavLink>
-    <NavLink  >Home</NavLink>
+    <NavLink to='/coverage'>Coverage</NavLink>
   </div>
   return (
    <div className="navbar bg-base-100 shadow-sm">
