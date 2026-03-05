@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import UseAuth from '../../../hook/UseAuth';
  
 
 const Register = () => {
@@ -8,8 +9,18 @@ const Register = () => {
     register,
     handleSubmit,
     formState:{errors}}=useForm();
+
+const {registerUser}=UseAuth();
+
   const handleRegistration=(data)=>{
     console.log('after register',data);
+    registerUser(data.email,data.password)
+    .then(res=>{
+      console.log(res.user)
+    })
+    .catch(error=>{
+      console.log(error)
+    })
   }
   return (
     <div>
@@ -30,7 +41,7 @@ const Register = () => {
 
 
           <div><a className="link link-hover">Forgot password?</a></div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-neutral mt-4">Register</button>
         </fieldset>
       </form>
     </div>
