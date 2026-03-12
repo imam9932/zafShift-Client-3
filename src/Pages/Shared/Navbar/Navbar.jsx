@@ -1,10 +1,24 @@
 import React from 'react';
 import Logo from '../../../Components/Logo/Logo';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import { FaLocationArrow } from "react-icons/fa6";
+import UseAuth from '../../../hook/UseAuth';
 
 
 const Navbar = () => {
+  const {user,logOut}=UseAuth();
+  console.log(user);
+
+  const handleLogOut=()=>{
+    logOut()
+    .then(res=>{
+      console.log(res.user)
+    })
+    .catch(err=>{
+      console.log(err.message)
+    })
+
+  }
   const links=
   <div className='flex gap-5'>
     <NavLink  >Home</NavLink>
@@ -32,9 +46,12 @@ const Navbar = () => {
       {links}
     </ul>
   </div>
-  <div className="navbar-end">
-    <a className="btn">Be a rider <FaLocationArrow />
-</a>
+  <div className="navbar-end flex gap-5">
+    {
+      user? <a onClick={handleLogOut} className="btn">Log Out</a>: <Link to='/login' className="btn">Login</Link>
+    }
+    <Link to='/rider' className="btn">Be a rider <FaLocationArrow />
+</Link>
   </div>
 </div>
   );
