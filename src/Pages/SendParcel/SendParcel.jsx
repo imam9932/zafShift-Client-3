@@ -1,17 +1,31 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
+import { useLoaderData } from 'react-router';
 
 const SendParcel = () => {
-    const {register,handleSubmit,formState:{errors}}=useForm();
+    const { register, handleSubmit,control, formState: { errors } } = useForm();
+    const serviceCenters = useLoaderData();
+    const regionsDuplicate = serviceCenters.map(c => c.region);
+    const regions = [...new Set(regionsDuplicate)]
+     
+    const senderRegion=useWatch({control,name:'senderRegion'});
+    const receiverRegion=useWatch({control,name:'receiverRegion'});
 
-    const handleSendParcel=data=>{
+    const districtsByRegion=region=>{
+        const regionDistricts=serviceCenters.filter(c=>c.region===region);
+        const districts=regionDistricts.map(d=>d.district);
+        return districts;
+    }
+
+    const handleSendParcel = data => {
+        console.log(data);
 
     }
     return (
         <div>
             <h2 className='text-5xl font-bold'>Send A Parcel</h2>
 
-            <form onSubmit={handleSubmit(handleSendParcel)} className='mt-12' >
+            <form onSubmit={handleSubmit(handleSendParcel)} className='mt-12 text-black ' >
 
                 {/* parcel type */}
                 <div>
@@ -20,28 +34,137 @@ const SendParcel = () => {
 
                         Document</label>
                     <label className="label">
-                        <input type="radio" value='non-document' {...register('parcelType')} className="radio"   />
+                        <input type="radio" value='non-document' {...register('parcelType')} className="radio" />
 
                         Non-Document</label>
                 </div>
 
                 {/* parcel info:name,weight */}
-                <div>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
+                    <fieldset className="fieldset">
+                        <label className="label">Parcel Name</label>
+                        <input type="text" className="input w-full" placeholder="Parcel Name" {...register('parcel Name')} />
+
+                    </fieldset>
+                    <fieldset className="fieldset">
+                        <label className="label">Parcel Weight (kg)</label>
+                        <input type="number" className="input w-full" placeholder="Parcel weight" {...register('parcel Weight')} />
+
+                    </fieldset>
 
                 </div>
 
                 {/* two column */}
-                <div>
-                    {/* sender info */}
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
                     <div>
+                        {/* sender info */}
+                        <h4 className='text-2xl font-semibold'>Sender Details</h4>
+                        <fieldset className="fieldset space-y-2">
+                            {/* sender name */}
+                            <label className="label">Sender Name</label>
+                            <input type="text" className="input w-full" placeholder="Sender Name" {...register('SenderName')} />
 
+                            {/* sender address */}
+                            <label className="label">Sender Address</label>
+                            <input type="text" className="input w-full" placeholder="  Address" {...register('SenderAddress')} />
+
+                            {/* sender email */}
+                            <label className="label">Sender Email</label>
+                            <input type="email" className="input w-full" placeholder="  Email" {...register('SenderEmail')} />
+
+                            {/* sender phone */}
+                            <label className="label">Sender Phone</label>
+                            <input type="number" className="input w-full" placeholder="  Phone" {...register('SenderPhone')} />
+
+
+                            {/* sender region */}
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Regions</legend>
+                                <select  {...register('senderRegion')} defaultValue="Pick a region" className="select">
+                                    <option disabled={true}>Pick a region</option>
+                                    {
+                                        regions.map((r, i) => <option key={i} value={r}>{r} </option>)
+                                    }
+                                </select>
+
+                            </fieldset>
+
+
+                            {/* sender District */}
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Districts</legend>
+                                <select  {...register('senderDistrict')} defaultValue="Pick a District" className="select">
+                                    <option disabled={true}>Pick a District</option>
+                                    {
+                                        districtsByRegion(senderRegion).map((r, i) => <option key={i} value={r}>{r} </option>)
+                                    }
+                                </select>
+
+                            </fieldset>
+
+                            
+
+                            {/* pickup instruction */}
+                            <label className="label">Pickup Instruction</label>
+                            <input type="text" className="input w-full" placeholder="Pickup Instruction" {...register('PickupInstruction')} />
+
+                        </fieldset>
                     </div>
-                    {/* receiver info */}
                     <div>
+                        {/* receiver info */}
+                        <h4 className='text-2xl font-semibold'>Receiver Details</h4>
+                        <fieldset className="fieldset space-y-2">
+                            {/* Receiver name */}
+                            <label className="label">Receiver Name</label>
+                            <input type="text" className="input w-full" placeholder="Receiver Name" {...register('ReceiverName')} />
 
+                            {/* Receiver address */}
+                            <label className="label">Receiver Address</label>
+                            <input type="text" className="input w-full" placeholder="  Address" {...register('ReceiverAddress')} />
+
+                            {/* Receiver email */}
+                            <label className="label">Receiver Email</label>
+                            <input type="email" className="input w-full" placeholder="  Email" {...register('ReceiverEmail')} />
+
+                            {/* Receiver phone */}
+                            <label className="label">Receiver Phone</label>
+                            <input type="number" className="input w-full" placeholder="  Phone" {...register('ReceiverPhone')} />
+
+
+                            {/* Receiver region */}
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Regions</legend>
+                                <select  {...register(' ReceiverRegion')} defaultValue="Pick a region" className="select">
+                                    <option disabled={true}>Pick a region</option>
+                                    {
+                                        regions.map((r, i) => <option key={i} value={r}>{r} </option>)
+                                    }
+                                </select>
+
+                            </fieldset>
+
+
+                            {/*  Receiver District */}
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Districts</legend>
+                                <select  {...register(' ReceiverDistrict')} defaultValue="Pick a District" className="select">
+                                    <option disabled={true}>Pick a District</option>
+                                    {
+                                        districtsByRegion(receiverRegion).map((r, i) => <option key={i} value={r}>{r} </option>)
+                                    }
+                                </select>
+
+                            </fieldset>
+
+
+                            {/* Delivery instruction */}
+                            <label className="label">Delivery Instruction</label>
+                            <input type="text" className="input w-full" placeholder="Delivery Instruction" {...register('DeliveryInstruction')} />
+
+                        </fieldset>
                     </div>
                 </div>
-                <input type="submit" className='btn btn-primary text-black' value='send Parcel' />
+                <input type="submit" className='btn btn-primary text-black mt-5' value='send Parcel' />
             </form>
         </div>
     );
