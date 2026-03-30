@@ -1,9 +1,18 @@
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hook/useAxiosSecure';
 
 const SendParcel = () => {
-    const { register, handleSubmit,control, formState: { errors } } = useForm();
+    const { 
+        register,
+         handleSubmit,
+         control, 
+        // formState: { errors } 
+    } = useForm();
+
+    const axiosSecure=useAxiosSecure();
     const serviceCenters = useLoaderData();
     const regionsDuplicate = serviceCenters.map(c => c.region);
     const regions = [...new Set(regionsDuplicate)]
@@ -19,6 +28,55 @@ const SendParcel = () => {
 
     const handleSendParcel = data => {
         console.log(data);
+
+        const isDocument=data.parcelType==='document';
+        const isSameDistrict=data.senderDistrict===data.receiverDistrict;
+        const parcelWeight=parseFloat(data.parcelWeight);
+
+        let cost=0;
+        if(isDocument)
+        {
+            cost=isSameDistrict? 60:80; 
+        }
+        else{
+if(parcelWeight<3){
+    cost=isSameDistrict ? 110 : 150
+}
+else{
+    const minCharge=isSameDistrict ? 110 : 150;
+    const extraWeight=parcelWeight-3;
+    const extraCharge=isSameDistrict ? extraWeight * 40 : extraWeight * 40 + 40;
+     
+    cost=minCharge+extraCharge;
+}
+        }
+
+        console.log('cost',cost)
+
+        Swal.fire({
+  title: "Agree with the cost?",
+  text: ` You will pay ${cost} tk`,
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, I Agree!"
+}).then((result) => {
+  if (result.isConfirmed) {
+
+    // save the data to the db
+axiosSecure.post('/parcels',data)
+.then(res=>{
+    console.log('after saving parcel' ,res.data)
+})
+
+    Swal.fire({
+      title: "Submitted!",
+      text: "Your request has been Submitted.Please wait for confirmation",
+      icon: "success"
+    });
+  }
+});
 
     }
     return (
@@ -134,7 +192,7 @@ const SendParcel = () => {
                             {/* Receiver region */}
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Regions</legend>
-                                <select  {...register(' ReceiverRegion')} defaultValue="Pick a region" className="select">
+                                <select  {...register('receiverRegion')} defaultValue="Pick a region" className="select">
                                     <option disabled={true}>Pick a region</option>
                                     {
                                         regions.map((r, i) => <option key={i} value={r}>{r} </option>)
@@ -147,7 +205,7 @@ const SendParcel = () => {
                             {/*  Receiver District */}
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Districts</legend>
-                                <select  {...register(' ReceiverDistrict')} defaultValue="Pick a District" className="select">
+                                <select  {...register('receiverDistrict')} defaultValue="Pick a District" className="select">
                                     <option disabled={true}>Pick a District</option>
                                     {
                                         districtsByRegion(receiverRegion).map((r, i) => <option key={i} value={r}>{r} </option>)
@@ -155,6 +213,9 @@ const SendParcel = () => {
                                 </select>
 
                             </fieldset>
+
+                               
+
 
 
                             {/* Delivery instruction */}
