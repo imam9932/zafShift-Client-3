@@ -3,6 +3,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hook/useAxiosSecure';
+import UseAuth from '../../hook/UseAuth';
 
 const SendParcel = () => {
     const { 
@@ -11,6 +12,8 @@ const SendParcel = () => {
          control, 
         // formState: { errors } 
     } = useForm();
+
+    const {user}=UseAuth()
 
     const axiosSecure=useAxiosSecure();
     const serviceCenters = useLoaderData();
@@ -124,11 +127,11 @@ axiosSecure.post('/parcels',data)
 
                             {/* sender address */}
                             <label className="label">Sender Address</label>
-                            <input type="text" className="input w-full" placeholder="  Address" {...register('SenderAddress')} />
+                            <input type="text" defaultValue={user?.displayName} className="input w-full" placeholder="  Address" {...register('SenderAddress')} />
 
                             {/* sender email */}
                             <label className="label">Sender Email</label>
-                            <input type="email" className="input w-full" placeholder="  Email" {...register('SenderEmail')} />
+                            <input type="email" defaultValue={user?.email} className="input w-full" placeholder="  Email" {...register('SenderEmail')} />
 
                             {/* sender phone */}
                             <label className="label">Sender Phone</label>
