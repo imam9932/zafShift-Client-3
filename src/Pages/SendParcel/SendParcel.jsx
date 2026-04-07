@@ -123,11 +123,11 @@ axiosSecure.post('/parcels',data)
                         <fieldset className="fieldset space-y-2">
                             {/* sender name */}
                             <label className="label">Sender Name</label>
-                            <input type="text" className="input w-full" placeholder="Sender Name" {...register('SenderName')} />
+                            <input type="text" defaultValue={user?.displayName} className="input w-full" placeholder="Sender Name" {...register('SenderName')} />
 
                             {/* sender address */}
                             <label className="label">Sender Address</label>
-                            <input type="text" defaultValue={user?.displayName} className="input w-full" placeholder="  Address" {...register('SenderAddress')} />
+                            <input type="text"  className="input w-full" placeholder="  Address" {...register('SenderAddress')} />
 
                             {/* sender email */}
                             <label className="label">Sender Email</label>
