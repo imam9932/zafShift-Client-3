@@ -104,12 +104,12 @@ axiosSecure.post('/parcels',data)
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
                     <fieldset className="fieldset">
                         <label className="label">Parcel Name</label>
-                        <input type="text" className="input w-full" placeholder="Parcel Name" {...register('parcel Name')} />
+                        <input type="text" className="input w-full" placeholder="Parcel Name" {...register('parcelName')} />
 
                     </fieldset>
                     <fieldset className="fieldset">
                         <label className="label">Parcel Weight (kg)</label>
-                        <input type="number" className="input w-full" placeholder="Parcel weight" {...register('parcel Weight')} />
+                        <input type="number" className="input w-full" placeholder="Parcel weight" {...register('parcelWeight')} />
 
                     </fieldset>
 
@@ -123,19 +123,19 @@ axiosSecure.post('/parcels',data)
                         <fieldset className="fieldset space-y-2">
                             {/* sender name */}
                             <label className="label">Sender Name</label>
-                            <input type="text" defaultValue={user?.displayName} className="input w-full" placeholder="Sender Name" {...register('SenderName')} />
+                            <input type="text" defaultValue={user?.displayName} className="input w-full" placeholder="Sender Name" {...register('senderName')} />
 
-                            {/* sender address */}
+                            {/* sender address
                             <label className="label">Sender Address</label>
-                            <input type="text"  className="input w-full" placeholder="  Address" {...register('SenderAddress')} />
+                            <input type="text"  className="input w-full" placeholder="Address" {...register('senderAddress')} /> */}
 
                             {/* sender email */}
                             <label className="label">Sender Email</label>
-                            <input type="email" defaultValue={user?.email} className="input w-full" placeholder="  Email" {...register('SenderEmail')} />
+                            <input type="email" defaultValue={user?.email} className="input w-full" placeholder="  Email" {...register('senderEmail')} />
 
                             {/* sender phone */}
                             <label className="label">Sender Phone</label>
-                            <input type="number" className="input w-full" placeholder="  Phone" {...register('SenderPhone')} />
+                            <input type="number" className="input w-full" placeholder="  Phone" {...register('senderPhone')} />
 
 
                             {/* sender region */}
@@ -165,9 +165,9 @@ axiosSecure.post('/parcels',data)
 
                             
 
-                            {/* pickup instruction */}
+                            {/* pickup instruction
                             <label className="label">Pickup Instruction</label>
-                            <input type="text" className="input w-full" placeholder="Pickup Instruction" {...register('PickupInstruction')} />
+                            <input type="text" className="input w-full" placeholder="Pickup Instruction" {...register('pickupInstruction')} /> */}
 
                         </fieldset>
                     </div>
@@ -177,19 +177,19 @@ axiosSecure.post('/parcels',data)
                         <fieldset className="fieldset space-y-2">
                             {/* Receiver name */}
                             <label className="label">Receiver Name</label>
-                            <input type="text" className="input w-full" placeholder="Receiver Name" {...register('ReceiverName')} />
+                            <input type="text" className="input w-full" placeholder="Receiver Name" {...register('receiverName')} />
 
-                            {/* Receiver address */}
+                            {/* Receiver address
                             <label className="label">Receiver Address</label>
-                            <input type="text" className="input w-full" placeholder="  Address" {...register('ReceiverAddress')} />
+                            <input type="text" className="input w-full" placeholder="  Address" {...register('receiverAddress')} /> */}
 
                             {/* Receiver email */}
                             <label className="label">Receiver Email</label>
-                            <input type="email" className="input w-full" placeholder="  Email" {...register('ReceiverEmail')} />
+                            <input type="email" className="input w-full" placeholder="  Email" {...register('receiverEmail')} />
 
                             {/* Receiver phone */}
                             <label className="label">Receiver Phone</label>
-                            <input type="number" className="input w-full" placeholder="  Phone" {...register('ReceiverPhone')} />
+                            <input type="number" className="input w-full" placeholder="  Phone" {...register('receiverPhone')} />
 
 
                             {/* Receiver region */}
@@ -221,9 +221,9 @@ axiosSecure.post('/parcels',data)
 
 
 
-                            {/* Delivery instruction */}
+                            {/* Delivery instruction
                             <label className="label">Delivery Instruction</label>
-                            <input type="text" className="input w-full" placeholder="Delivery Instruction" {...register('DeliveryInstruction')} />
+                            <input type="text" className="input w-full" placeholder="Delivery Instruction" {...register('deliveryInstruction')} /> */}
 
                         </fieldset>
                     </div>
