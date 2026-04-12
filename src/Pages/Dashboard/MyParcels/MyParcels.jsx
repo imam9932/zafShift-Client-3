@@ -6,6 +6,7 @@ import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GrFormView } from "react-icons/gr";
 import Swal from 'sweetalert2';
+import { Link } from 'react-router';
 
 
 
@@ -24,6 +25,7 @@ const MyParcels = () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
       return res.data
     }
+   
 
   }
   )
@@ -62,6 +64,7 @@ const MyParcels = () => {
 
     });
   }
+   console.log(parcels)
 
 
   return (
@@ -73,10 +76,11 @@ const MyParcels = () => {
           {/* head */}
           <thead>
             <tr>
-              <th></th>
+              <th>NO</th>
               <th>Name</th>
               <th>Cost</th>
-              <th>Payment Status </th>
+              <th>Payment </th>
+              <th>Delivery Status </th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -87,6 +91,12 @@ const MyParcels = () => {
                 <th>{index + 1}</th>
                 <td> {parcel.parcelName}</td>
                 <td> {parcel.cost}</td>
+                <td>
+                  {
+                    parcel.paymentStatus==='paid'? <span className='text-green-400'>Paid</span>:<Link to={`/dashboard/payment/${parcel._id}`}><button className='btn btn-primary text-black'>Please Pay</button></Link>
+                  }
+                </td>
+                <td> {parcel.deliveryStatus}</td>
                 <td>Blue</td>
 
                 <td className='gap-2 flex'>
