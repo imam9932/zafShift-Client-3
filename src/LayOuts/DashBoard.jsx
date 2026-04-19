@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaBoxOpen } from 'react-icons/fa6';
 import { Link, NavLink, Outlet } from 'react-router';
+import { MdOutlinePayment } from "react-icons/md";
+
 
 const DashBoard = () => {
     return (
@@ -43,6 +45,19 @@ const DashBoard = () => {
            <FaBoxOpen />
 
             <span className="is-drawer-close:hidden">My Parcels</span>
+          </Link>
+        </li>
+
+
+        {/*payment history */}
+        <li>
+          <Link to='/dashboard/payment-history' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History">
+
+            {/* payment icon */}
+           <MdOutlinePayment />
+
+
+            <span className="is-drawer-close:hidden">Payment History</span>
           </Link>
         </li>
 

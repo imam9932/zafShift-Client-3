@@ -1,11 +1,20 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
+import UseAuth from './UseAuth';
 
 const axiosSecure=axios.create({
     baseURL:'http://localhost:3000'
 })
 
 const useAxiosSecure = () => {
+    const {user}=UseAuth();
+// intercept request
+    useEffect(()=>{
+        axiosSecure.interceptors.request.use(config=>{
+            config.headers.Authorization=`Bearer ${user?.accessToken}`
+            return config
+        })
+    },[user])
     return axiosSecure;
 };
 
