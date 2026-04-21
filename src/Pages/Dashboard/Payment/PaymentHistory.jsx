@@ -26,6 +26,7 @@ queryFn:async()=>{
         <th>Name</th>
         <th>Amount</th>
         <th>Transaction ID </th>
+        <th>Paid Time</th>
       </tr>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@ queryFn:async()=>{
         <td>Cy Ganderton</td>
         <td> {payment.amount} TK</td>
         <td> {payment.transactionId}</td>
+        <td> {payment.paidAt}</td>
       </tr>
         )
       }

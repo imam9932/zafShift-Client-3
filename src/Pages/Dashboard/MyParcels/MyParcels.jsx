@@ -94,6 +94,7 @@ const MyParcels = () => {
               <th>Cost</th>
               <th>Payment </th>
               <th>Delivery Status </th>
+              <th>Sending Time</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -110,7 +111,7 @@ const MyParcels = () => {
                   }
                 </td>
                 <td> {parcel.deliveryStatus}</td>
-                <td>Blue</td>
+                <td>{parcel.createdAt}</td>
 
                 <td className='gap-2 flex'>
                   <button className='btn btn-square hover:bg-primary'><CiEdit />
