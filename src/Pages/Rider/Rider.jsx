@@ -3,6 +3,8 @@ import { useForm, useWatch } from 'react-hook-form';
 import UseAuth from '../../hook/UseAuth';
 import { useLoaderData, useNavigate } from 'react-router';
 import useAxiosSecure from '../../hook/useAxiosSecure';
+import deliveryMan from '../../assets/agent-pending.png'
+import Swal from 'sweetalert2';
 
 const Rider = () => {
      const { 
@@ -20,7 +22,7 @@ const Rider = () => {
             const regionsDuplicate = serviceCenters.map(c => c.region);
             const regions = [...new Set(regionsDuplicate)];
 
-            const senderRegion=useWatch({control,name:'senderRegion'});
+            const riderRegion=useWatch({control,name:'riderRegion'});
 
             const districtsByRegion=region=>{
         const regionDistricts=serviceCenters.filter(c=>c.region===region);
@@ -30,33 +32,53 @@ const Rider = () => {
 
             const handleApplication=data=>{
                 console.log(data);
+                axiosSecure.post('/riders',data)
+                .then(res=>{
+                    if(res.data.insertedId){
+
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "success",
+                          title: "Your application has been submitted.We will reach to you in 45 days",
+                          showConfirmButton: false,
+                          timer: 2000,
+                        });
+                    }
+                })
             }
     return (
         <div>
-            <h2 className='text-4xl text-center font-bold '>Be A Rider</h2>
+            <h2 className='text-4xl font-bold '>Be A Rider</h2>
+            <p className='mt-5'>Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. <br /> From personal packages to business shipments <br /> — we deliver on time, every time.</p>
              <form onSubmit={handleSubmit(handleApplication)} className='mt-12 text-black ' >
 
-                
+                {/* rider info */}
+                        <h4 className='text-2xl font-semibold'>Tell us about yourself</h4>
 
                 {/* two column */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-12 justify-center items-center'>
                     <div>
-                        {/* rider info */}
-                        <h4 className='text-2xl font-semibold'>RiderDetails</h4>
+                        
                         <fieldset className="fieldset space-y-2">
                             {/* rider name */}
                             <label className="label">Rider Name</label>
-                            <input type="text" defaultValue={user?.displayName} className="input w-full" placeholder="Sender Name" {...register('riderName')} />
+                            <input type="text" defaultValue={user?.displayName} className="input w-full" placeholder="Name" {...register('riderName')} />
 
-                            {/* rider address */}
-                            <label className="label">Address</label>
-                            <input type="text"  className="input w-full" placeholder="Address" {...register('riderAddress')} />
+                            
 
                             {/* rider email */}
                             <label className="label">Email</label>
                             <input type="email" defaultValue={user?.email} className="input w-full" placeholder="  Email" {...register('riderEmail')} />
 
-                            {/* phone */}
+                            {/* NID */}
+                            <label className="label">NID No</label>
+                            <input type="number" className="input w-full" placeholder="NID" {...register('riderNID')} />
+                            </fieldset>
+                    </div>
+
+                    <div>
+                        <fieldset>
+                             {/* phone */}
                             <label className="label">Phone</label>
                             <input type="number" className="input w-full" placeholder="  Phone" {...register('riderPhone')} />
 
@@ -64,7 +86,7 @@ const Rider = () => {
                             {/*  region */}
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Regions</legend>
-                                <select  {...register('senderRegion')} defaultValue="Pick a region" className="select">
+                                <select  {...register('riderRegion')} defaultValue="Pick a region" className="select">
                                     <option disabled={true}>Pick a region</option>
                                     {
                                         regions.map((r, i) => <option key={i} value={r}>{r} </option>)
@@ -77,20 +99,19 @@ const Rider = () => {
                             {/* District */}
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Districts</legend>
-                                <select  {...register('senderDistrict')} defaultValue="Pick a District" className="select">
+                                <select  {...register('riderDistrict')} defaultValue="Pick a District" className="select">
                                     <option disabled={true}>Pick a District</option>
                                     {
-                                        districtsByRegion(senderRegion).map((r, i) => <option key={i} value={r}>{r} </option>)
+                                        districtsByRegion(riderRegion).map((r, i) => <option key={i} value={r}>{r} </option>)
                                     }
                                 </select>
 
                             </fieldset>
 
-                            
-
-                            
-
                         </fieldset>
+                    </div>
+                    <div>
+                        <img src={deliveryMan} alt="" />
                     </div>
                      
                 </div>

@@ -1,7 +1,11 @@
 import React from 'react';
-import { FaBoxOpen } from 'react-icons/fa6';
+import { FaBoxOpen, FaUserShield } from 'react-icons/fa6';
 import { Link, NavLink, Outlet } from 'react-router';
 import { MdOutlinePayment } from "react-icons/md";
+import { RiEBikeFill } from "react-icons/ri";
+
+
+
 
 
 const DashBoard = () => {
@@ -58,6 +62,36 @@ const DashBoard = () => {
 
 
             <span className="is-drawer-close:hidden">Payment History</span>
+          </Link>
+        </li>
+
+
+        {/* approve riders */}
+         <li>
+          <Link to='/dashboard/approve-riders' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve-riders">
+
+            {/* bike */}
+ <RiEBikeFill />
+
+
+
+
+            <span className="is-drawer-close:hidden">Approve Riders</span>
+          </Link>
+        </li>
+
+        {/* users */}
+         <li>
+          <Link to='/dashboard/users' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Users">
+
+            {/* users */}
+ <FaUserShield />
+
+
+
+
+
+            <span className="is-drawer-close:hidden">Users</span>
           </Link>
         </li>
 
