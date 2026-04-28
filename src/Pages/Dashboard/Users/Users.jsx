@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useAxiosSecure from '../../../hook/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { RiUserSettingsFill } from 'react-icons/ri';
@@ -8,10 +8,11 @@ import Swal from 'sweetalert2';
 
 const Users = () => {
     const axiosSecure = useAxiosSecure();
+    const [searchText,setSearchText]=useState(' ')
     const { refetch, data: users = [] } = useQuery({
-        queryKey: ['users'],
+        queryKey: ['users',searchText],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/users`);
+            const res = await axiosSecure.get(`/users?searchText=${searchText}`);
             return res.data;
         }
     });
@@ -19,10 +20,10 @@ const Users = () => {
 
     const handleMakeAdmin = (user) => {
         const roleInfo = { role: 'admin' };
-        axiosSecure.patch(`/users/${user._id}`, roleInfo)
+        axiosSecure.patch(`/users/${user._id}/role`, roleInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
-                   
+
                     Swal.fire({
                         title: "Are you sure?",
                         text: `${user.displayName} make as an Admin`,
@@ -32,9 +33,9 @@ const Users = () => {
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Yes, make it!"
                     }).then((result) => {
-                        if (result.isConfirmed) 
-                             refetch()
-                            Swal.fire({
+                        if (result.isConfirmed)
+                            refetch()
+                        Swal.fire({
                             title: `${user.displayName} is Admin now`,
                             text: "He can controls your website.",
                             icon: "success"
@@ -44,12 +45,12 @@ const Users = () => {
             })
     };
 
-    const handleRemoveAdmin=user=>{
-         const roleInfo = { role: 'user' };
-        axiosSecure.patch(`/users/${user._id}`, roleInfo)
+    const handleRemoveAdmin = user => {
+        const roleInfo = { role: 'user' };
+        axiosSecure.patch(`/users/${user._id}/role`, roleInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
-                    
+
                     Swal.fire({
                         title: "Are you sure?",
                         text: `${user.displayName} remove from Admin`,
@@ -59,9 +60,9 @@ const Users = () => {
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Yes, make it!"
                     }).then((result) => {
-                        if (result.isConfirmed) 
+                        if (result.isConfirmed)
                             refetch()
-                            Swal.fire({
+                        Swal.fire({
                             title: `${user.displayName} is user now`,
                             text: "He can't controls your website.",
                             icon: "success"
@@ -74,7 +75,23 @@ const Users = () => {
     return (
         <div>
             <h1 className='text-xl font-bold'>All of Users : {users.length}</h1>
-
+            <p>search text : {searchText}</p>
+            <label className="input">
+                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        strokeWidth="2.5"
+                        fill="none"
+                        stroke="currentColor"
+                    >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
+                <input onChange={(e)=>setSearchText(e.target.value)} type="search" className="grow" placeholder="Search" />
+                
+            </label>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -121,7 +138,7 @@ const Users = () => {
                                 <td>
                                     {
                                         user.role === 'admin' ?
-                                            <button onClick={()=>handleRemoveAdmin(user)} className='btn bg-red-400'> <RiUserSettingsFill />
+                                            <button onClick={() => handleRemoveAdmin(user)} className='btn bg-red-400'> <RiUserSettingsFill />
                                             </button> :
                                             <button onClick={() => handleMakeAdmin(user)} className='btn bg-green-400'> <LiaUserSlashSolid />
                                             </button>

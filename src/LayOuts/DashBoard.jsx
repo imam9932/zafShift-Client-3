@@ -3,12 +3,17 @@ import { FaBoxOpen, FaUserShield } from 'react-icons/fa6';
 import { Link, NavLink, Outlet } from 'react-router';
 import { MdOutlinePayment } from "react-icons/md";
 import { RiEBikeFill } from "react-icons/ri";
+import { SiRider } from "react-icons/si";
+
+import useRole from '../hook/useRole';
 
 
 
 
 
 const DashBoard = () => {
+  const {role}=useRole();
+  console.log('role',role);
     return (
        <div className="drawer lg:drawer-open">
   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -66,7 +71,9 @@ const DashBoard = () => {
         </li>
 
 
-        {/* approve riders */}
+       {
+         role === 'admin' && <>
+         {/* approve riders */}
          <li>
           <Link to='/dashboard/approve-riders' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve-riders">
 
@@ -77,6 +84,22 @@ const DashBoard = () => {
 
 
             <span className="is-drawer-close:hidden">Approve Riders</span>
+          </Link>
+        </li>
+
+
+         {/* assign riders */}
+         <li>
+          <Link to='/dashboard/assign-riders' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign-riders">
+
+            {/*rider */}
+ <SiRider />
+
+
+
+
+
+            <span className="is-drawer-close:hidden">Assign Riders</span>
           </Link>
         </li>
 
@@ -94,6 +117,8 @@ const DashBoard = () => {
             <span className="is-drawer-close:hidden">Users</span>
           </Link>
         </li>
+        </>
+       }
 
         
 

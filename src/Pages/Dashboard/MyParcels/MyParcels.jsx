@@ -94,6 +94,8 @@ const MyParcels = () => {
               <th>Cost</th>
               <th>Payment </th>
               <th>Delivery Status </th>
+              <th>Tracking ID </th>
+            
               <th>Sending Time</th>
               <th>Actions</th>
             </tr>
@@ -111,6 +113,8 @@ const MyParcels = () => {
                   }
                 </td>
                 <td> {parcel.deliveryStatus}</td>
+                <td> {parcel.trackingId}</td>
+                
                 <td>{parcel.createdAt}</td>
 
                 <td className='gap-2 flex'>
