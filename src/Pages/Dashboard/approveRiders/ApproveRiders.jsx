@@ -58,7 +58,8 @@ updateRidersStatus(rider,'rejected')
         <th>Name</th>
         <th>Email</th>
         <th>District</th>
-        <th>Status</th>
+        <th>Application Status</th>
+        <th>Work Status</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -71,6 +72,7 @@ updateRidersStatus(rider,'rejected')
         <td>{rider.riderEmail}</td>
         <td>{rider.riderDistrict}</td>
         <td><p className={`${rider.status==='approved'? 'text-green-800' : 'text-red-500'}`}>{rider.status}</p></td>
+         <td>{rider.workStatus}</td>
         
         <td className='flex gap-3'>
             <button onClick={()=>handleApproval(rider)} className='btn'>
