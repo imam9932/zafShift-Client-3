@@ -4,6 +4,8 @@ import { Link, NavLink, Outlet } from 'react-router';
 import { MdOutlinePayment } from "react-icons/md";
 import { RiEBikeFill } from "react-icons/ri";
 import { SiRider } from "react-icons/si";
+import { FaTasks } from "react-icons/fa";
+
 
 import useRole from '../hook/useRole';
 
@@ -69,6 +71,24 @@ const DashBoard = () => {
             <span className="is-drawer-close:hidden">Payment History</span>
           </Link>
         </li>
+
+        {
+           <>
+            <li>
+          <Link to='/dashboard/assigned-deliveries' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assigned-deliveries">
+
+            {/* bike */}
+ <FaTasks />
+
+
+
+
+
+            <span className="is-drawer-close:hidden">Assigned-deliveries</span>
+          </Link>
+        </li>
+          </>
+        }
 
 
        {
