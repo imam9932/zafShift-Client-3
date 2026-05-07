@@ -22,6 +22,8 @@ import AdminOnlyRoute from "./AdminOnlyRoute";
 import AssignRiders from "../Pages/Dashboard/AssignRiders/AssignRiders";
 import RiderOnlyRoute from "./RiderOnlyRoute";
 import AssignedDeliveries from "../Pages/Dashboard/assignedDeliveries/AssignedDeliveries";
+import CompletedDeliveries from "../Pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
+import ParcelTrack from "../Pages/ParcelTrack/ParcelTrack";
 
 export const router = createBrowserRouter([
   {
@@ -51,10 +53,16 @@ export const router = createBrowserRouter([
       {
         path:'/about-us',
         element:<AboutUs></AboutUs>
-      }
+      },
+      {
+        path:'/parcel-track/:trackingId',
+        element:<ParcelTrack></ParcelTrack>
+      },
 
     ]
   },
+
+  // auth router
   {
     path:'/',
     element:<AuthLayout></AuthLayout>,
@@ -70,6 +78,8 @@ export const router = createBrowserRouter([
       }
     ]
   },
+
+  // dashboard router
 
   {
     path:'dashboard',
@@ -110,6 +120,10 @@ export const router = createBrowserRouter([
       {
         path:'assigned-deliveries',
         element:<AssignedDeliveries></AssignedDeliveries>
+      },
+      {
+        path:'completed-deliveries',
+        element:<CompletedDeliveries></CompletedDeliveries>
       }
     ]
   }

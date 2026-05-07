@@ -36,7 +36,8 @@ const AssignRiders = () => {
         riderId:rider._id,
         riderEmail:rider.riderEmail,
         riderName:rider.riderName,
-        parcelId:selectedParcel._id
+        parcelId:selectedParcel._id,
+        trackingId:selectedParcel.trackingId
       }
       axiosSecure.patch(`/parcels/${selectedParcel._id}`,riderAssignInfo)
       .then(res=>{
@@ -81,7 +82,7 @@ const AssignRiders = () => {
         <td> {parcel.cost} TK</td>
         <td> {parcel.createdAt}</td>
         <td> {parcel.senderDistrict}</td>
-        <td onClick={()=>openAssignRiderModal(parcel)} className='btn btn-primary text-black'> Assign Rider</td>
+        <td onClick={()=>openAssignRiderModal(parcel)} className='btn btn-primary text-black'>Find Rider</td>
        
         
 

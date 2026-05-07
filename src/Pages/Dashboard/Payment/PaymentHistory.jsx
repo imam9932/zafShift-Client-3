@@ -34,7 +34,7 @@ queryFn:async()=>{
         payments.map((payment,index)=>
              <tr key={payment._id}>
         <th>{index+1}</th>
-        <td>Cy Ganderton</td>
+        <td>{payment.displayName}</td>
         <td> {payment.amount} TK</td>
         <td> {payment.transactionId}</td>
         <td> {payment.paidAt}</td>
