@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "zap-shift-client-3",
+    "prod": "zap-shift-client-3"
+  },
+  "targets": {},
+  "etags": {}
+}
